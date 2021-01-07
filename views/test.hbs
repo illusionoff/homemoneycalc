@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test страница</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>Test страница</h1>
+    {{!-- <div>{{{sayHello}}}</div>
+    <div>{{{createStringList fruit}}}</div> --}}
+    
+<table>
+    <thead>
+      <tr>
+        <th>Название</th>
+				{{!-- <th>Цвет</th> --}}
+      </tr>
+    </thead>
+    <tbody>
+
+
+  {{!-- {{#each user.calc.costs.categories.name}}
+	<tr><td>{{@index}} &nbsp; {{this}}  --}}
+
+    {{!-- {{#each @../key }}
+    <tr><td>{{@key}} &nbsp; {{this}}  </td> </tr>
+    {{/each}}   --}}
+    
+  </td> </tr>
+  {{!-- {{/each}} --}}
+
+
+    </tbody>
+  </table>
+
+  {{!-- {{#with user.calc.costs.categories.name as |name|}}  
+      {{#each name}}
+        {{@index}}{{this}}<br>
+      {{/each}}
+  {{/with}} --}}
+
+    {{!-- {{#with user.calc.costs.categories as |categories|}}
+        {{#each categories.name }}
+        <br>
+            {{#each categories.color }}
+                {{@index}} {{this}} {{@../index}}{{categories.name}} <br>
+            {{/each}}
+        {{/each}}
+    {{/with}} --}}
+{{!-- {{#each user.calc.costs.categories.name}}
+   {{.}} lives in {{lookup ../color @index}}
+{{/each}} --}}
+<br>:
+{{!-- {{#with obj.people as |people|}} --}}
+    {{#each people }}
+    {{.}} lives in {{lookup ../cities @index}}
+    {{/each}}
+{{!-- {{/with}} --}}
+{{!-- <br>-
+{{#each obj.people}}
+   {{.}} 
+{{/each}}
+<br>
+{{#each obj.cities}}
+   {{.}} 
+{{/each}} --}}
+</body>
+<html>
