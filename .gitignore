@@ -4,4 +4,5 @@ node_modules
 /tests
 /keysProd
 /logs
+MyJavascript.js
 ecosystem.config.js

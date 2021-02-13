@@ -1,4 +1,5 @@
 module.exports = {
+  NODE_TLS_REJECT_UNAUTHORIZED: "0",
   MONGODB_URI:
     "mongodb+srv://alex:ICBZCa0ta3jLtDQl@cluster0-tyjtp.mongodb.net/shop",
   SESSION_SECRET: "ilovescotchscotchyscotchscotch",
@@ -6,11 +7,12 @@ module.exports = {
   // PASSWORD_GMAIL: 'passwsx16',
   // GMAIL_ADDRES: 'myhomeshop16@gmail.com',
   // BASE_URL: "http://localhost:8080",
-  PORT: 8080,
-  BASE_URL: "https://funprograms.ru:8080",
+  PORT: 5000, // 8080,
+  BASE_URL: "http://localhost:5000", // "http://localhost:8080" http://localhost:5000
   EMAIL_FROM: "learnnodelang@gmail.com",
   GMAIL_SETTINGS: {
-    service: "gmail",
+    service: "learnwewe@mail.com",
+    // service: "gmail",
     auth: {
       // type: 'OAuth2',
       user: "learnnodelang@gmail.com",

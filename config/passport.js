@@ -12,20 +12,48 @@ const User = require("../app/models/user");
 const keys = require("../keys"); // use this one for testing
 const regEmail = require("../emails/registration");
 // !!!! далее отключена для тестов проверка сертификации
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; // это отключение проверки SSL вроде без этого не работает с nodemailer test s
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = keys.NODE_TLS_REJECT_UNAUTHORIZED;
+// eslint-disable-next-line no-console
+console.log(
+  "process.env.NODE_TLS_REJECT_UNAUTHORIZED=",
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED
+);
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; // это отключение проверки SSL вроде без этого не работает с nodemailer test s
 
 const transporter = nodemailer.createTransport(keys.GMAIL_SETTINGS);
-// const RegisterSendMail = async function (transporter, email) {
+
+async function RegisterSendMail(transporter, email, req, user, done) {
+  try {
+    await transporter.sendMail(regEmail(email));
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log("await transporter.sendMail  catch (e):", e);
+    //  отключаем local-login вход
+    user.local.email = undefined;
+    user.local.password = undefined;
+    await user.save((err) => {
+      if (err) {
+        // eslint-disable-next-line no-console
+        console.log("err save 1", err);
+      }
+    });
+    return done(
+      null,
+      false,
+      req.flash(
+        "signupErrMessage",
+        "Email письмо не доставлено, попробуйте позже."
+      )
+    );
+  }
+}
+
 //     transporter.verify(function(error, success) {
 //         if (error) {
 //           console.log(error);
 //         } else {
 //           console.log("Server is ready to take our messages gmail.com");
 //         }
-//       });
-//     let result = await transporter.sendMail(regEmail(email));
-//     console.log('result 1', result);
-// }
 
 module.exports = (passport) => {
   // использование объекта заполнения БД раздела calc  в User
@@ -75,13 +103,9 @@ module.exports = (passport) => {
       },
       async (req, email, password, done) => {
         try {
-          // console.log(this.local.password);
-          // asynchronous
-          // process.nextTick(function() {
           await User.findOne({ "local.email": email }, async (err, user) => {
             // if there are any errors, return the error
             if (err) return done(err);
-
             // if no user is found, return the message
             if (!user)
               return done(
@@ -89,18 +113,7 @@ module.exports = (passport) => {
                 false,
                 req.flash("loginErrMessage", "Такого логина не существует.")
               );
-
-            // const areSame = bcrypt.compareSync(password, this.local.password); //
-
-            // userSchema.methods.validPassword = function(password) {
-            //     return bcrypt.compareSync(password, this.local.password);
-            // };
-            // const candidate =  user.local.password;
-            //  console.log(candidate);
-            // const areSame = bcrypt.compareSync(password, user.local.password); //
             const areSame = await bcrypt.compare(password, user.local.password); //
-            // if (!user.validPassword(password))
-            //     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
             if (!areSame)
               return done(
                 null,
@@ -152,56 +165,39 @@ module.exports = (passport) => {
               if (req.user) {
                 const { user } = req;
                 user.local.email = email;
-                // userSchema.methods.generateHash = function(password) {
-                //     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-                // };
                 const salt = await bcrypt.genSalt(8);
                 user.local.password = await bcrypt.hash(password, salt, null);
-
                 // user.local.password = user.generateHash(password);
                 await user.save(async (err) => {
                   if (err) throw err;
+
+                  await RegisterSendMail(transporter, email, req, user, done);
+
                   return done(null, user);
                 });
               }
               //  We're not logged in, so we're creating a brand new user.
               else {
                 // create the user
-                const newUser = new User();
-                newUser.local.email = email;
+                const user = new User();
+                user.local.email = email;
                 // newUser.local.password = newUser.generateHash(password);
                 const salt = await bcrypt.genSalt(8);
-                newUser.local.password = await bcrypt.hash(
-                  password,
-                  salt,
-                  null
-                );
+                user.local.password = await bcrypt.hash(password, salt, null);
                 // Object.assign(newUser, TestCalcObj); // Заполнение данных calc
-                await newUser.save((err) => {
+                await user.save(async (err) => {
                   if (err) throw err;
-                  return done(null, newUser);
+
+                  await RegisterSendMail(transporter, email, req, user, done);
+
+                  return done(null, user);
                 });
               }
-              // RegisterSendMail(transporter, email);
-              // eslint-disable-next-line no-unused-vars
-              transporter.verify((error, success) => {
-                if (error) {
-                  // eslint-disable-next-line no-console
-                  console.log(error);
-                } else {
-                  // eslint-disable-next-line no-console
-                  console.log("Server is ready to take our messages gmail.com");
-                }
-              });
-              const result = await transporter.sendMail(regEmail(email));
-              // eslint-disable-next-line no-console
-              console.log("result sendMail local-signup", result);
             }
           );
-          // });
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.log(e);
+          console.log("local-signup catch (e) ", e);
         }
       }
     )
@@ -261,15 +257,10 @@ module.exports = (passport) => {
                 newUser.facebook.email = profile.email;
                 // newUser.facebook.email = profile.emails[0].value;
 
-                // Object.assign(newUser, TestCalcObj); // Заполнение данных calc
-
                 await newUser.save((err) => {
                   if (err) throw err;
                   return done(null, newUser);
                 });
-
-                // console.log(req.user);
-                // RegisterSendMail(transporter, email);
               }
             );
           } else {

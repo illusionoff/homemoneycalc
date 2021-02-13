@@ -39,15 +39,15 @@ module.exports = (app) => {
           await transporter.sendMail(
             resetEmail(candidate.local.email, token),
             function (err, info) {
-              if (err) console.log("reset transporter.sendMail err:", err);
-              else console.log("reset transporter.sendMail info:", info);
+              if (err) console.log("transporter.sendMail err:", err);
+              else console.log("transporter.sendMail info:", info);
             }
           );
           // eslint-disable-next-line no-unused-vars
           transporter.verify((error, success) => {
             if (error) {
               // eslint-disable-next-line no-console
-              console.log(error);
+              console.log("verify error:", error);
               req.flash("errors", "Ошибка, попробуйте еще раз позже");
               res.redirect("/reset");
             } else {

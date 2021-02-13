@@ -54,7 +54,7 @@ app.use(
       // new winston.transports.Console({ filename: "combined.log" }),
     ],
     format: winston.format.combine(
-      winston.format.timestamp({ format: "YYYY/MM/dd HH:mm:ss:SSSS" }),
+      winston.format.timestamp({ format: "YYYY/MM/DD HH:mm:ss:SSSS" }),
       winston.format.colorize({ all: true }),
       winston.format.json(),
       winston.format.simple()
@@ -63,6 +63,7 @@ app.use(
     msg: "HTTP {{req.method}} {{req.url}}", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
     expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
     colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
+    // eslint-disable-next-line no-unused-vars
     ignoreRoute(req, res) {
       return false;
     }, // optional: allows to skip some log messages based on request and/or response
@@ -213,8 +214,8 @@ async function start() {
     app.listen(keys.PORT, () => {
       // eslint-disable-next-line no-console
       console.log(`The magic happens on port erere ${keys.PORT}`);
+      // eslint-disable-next-line no-console
       console.log(`MY_TEST_ENV= ${keys.MY_TEST_ENV}`);
-      // console.log(`MY_TEST_ENV_object= ${keys.MY_TEST_ENV_object.service}`);
       // const currentDate = new Date();
       // console.log("currentDate =", currentDate);
       // let dateTimezone = moment(currentDate).tz("America/Los_Angeles").format();

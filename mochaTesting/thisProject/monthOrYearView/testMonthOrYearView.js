@@ -1,6 +1,6 @@
+// Проверяем функцию monthOrYearView  вывода информации по выбранному месяцу или году в виде массивов для отображения в талицу на frontend
 const assert = require("assert").strict;
 const fs = require("fs");
-// const { defaultView } = require("./defaultView");
 const { monthOrYearView } = require("../../../routes/functions.js");
 
 const fileContentMonth = fs.readFileSync(

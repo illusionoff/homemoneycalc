@@ -3,7 +3,7 @@ const keys = require("../keys");
 module.exports = (email) => {
   return {
     from: keys.EMAIL_FROM,
-    to: email, // "venom12@inbox.ru",
+    to: email,
     subject: "Аккаунт создан",
     text:
       "Благодарим Вас за использование нашего програмного продукта HomeMoneyCalc. Надеемся он принесет Вам пользу.",

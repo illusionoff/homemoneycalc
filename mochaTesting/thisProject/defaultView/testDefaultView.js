@@ -1,9 +1,8 @@
 // Проверяем функцию defaultView  изменение цвета категорий в соотвествии с default = req.user.calc.costs.categories.name
 const assert = require("assert").strict;
 const fs = require("fs");
-// const { defaultView } = require("./defaultView");
 const { defaultView } = require("../../../routes/functions.js");
-// const ewewqewq = require("./mochaTesting/thisProject/days.json");
+
 const defaultName = [
   "Жилье",
   "Коммунальны услуги",

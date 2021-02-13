@@ -116,9 +116,19 @@ tr.border-top td {
 .child-center {
   display: inline-block;
 }
+.font-weight-600 {
+  font-weight: 600
+}
+
 @media (max-width: 600px) {
   .page-name-s {
-    font-size: 2rem;
+    font-size: 1.5rem;
+  }
+  .down-text {
+    font-size: 1rem;
+  }
+  .down-text-2 {
+    font-size: 1rem;
   }
   .font-size-15 {
     font-size: 1.5rem;
@@ -149,6 +159,16 @@ tr.border-top td {
   }
   .font-size-icon-2r {
     font-size: 3rem;
+  }
+
+  .page-name-s {
+    font-size: 2rem;
+  }
+  .down-text {
+    font-size: 1.5rem;
+  }
+  .down-text-2 {
+    font-size: 1.2rem;
   }
 }
 
@@ -279,6 +299,9 @@ td, th, .grid-padding {
 .margin-bottom-20 {
   margin-bottom: 20px;
 }
+.margin-bottom-50 {
+  margin-bottom: 50px;
+}
 .bg-color-aquam {
   background-color: LightCyan;
 }
@@ -293,4 +316,8 @@ td, th, .grid-padding {
 
 #buttonTablePie {
   background-color: #26a69a;
+}
+/* переопределяем свойства списка от materialize для страницы about */
+ul.about-ui-li:not(.browser-default)>li {
+  list-style-type: disc;
 }

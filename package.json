@@ -1,13 +1,13 @@
 {
-  "name": "easy-node-authentication-linking",
+  "name": "homemoneycalc",
   "version": "1.0.0",
-  "description": "Code for the entire scotch.io tutorial series: Complete Guide to Node Authentication",
-  "main": "server.js",
+  "description": "HomeMoneyCalc service allows you to save, organize your family expenses and income",
+  "main": "index.js",
   "scripts": {
     "test": "mocha mochaTesting/thisProject/monthOrYearView/testMonthOrYearView.js",
     "start": "nodemon index.js"
   },
-  "author": "",
+  "author": "illusion",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
