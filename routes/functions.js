@@ -1,11 +1,3 @@
-// const fs = require("fs").promises;
-// const fileContent = fs.readFileSync(
-//   "./mochaTesting/thisProject/days.json",
-//   "utf8"
-// );
-// console.log("fileContent=", fileContent);
-// //const days = JSON.parse(fileContent);
-// console.log("days_=", days_);
 /* eslint-disable eqeqeq */
 module.exports.defaultView = (
   defaultName,
