@@ -70,7 +70,7 @@ module.exports = (app, passport) => {
     // show the home page (will also have our login links)
     app.get("/", isLoggedInHome, (req, res) => {
       res.render("index", {
-        title: "Главная страница",
+        title: "HomeMoneyCalc",
         isHome: true,
       });
     });

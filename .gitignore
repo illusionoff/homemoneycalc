@@ -6,3 +6,5 @@ node_modules
 /logs
 MyJavascript.js
 ecosystem.config.js
+README_test.md
+/keys/keys.dev.js
